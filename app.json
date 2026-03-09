@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "FocusFlow AI",
+    "slug": "focusflow-ai",
+    "version": "1.0.0",
+    "scheme": "focusflow",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "web": {
+      "bundler": "metro",
+      "output": "single"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
