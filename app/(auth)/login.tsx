@@ -27,6 +27,7 @@ export default function Login() {
       password,
     });
     if (error) setError(error.message);
+    else router.replace("/(app)");
     setLoading(false);
   };
 

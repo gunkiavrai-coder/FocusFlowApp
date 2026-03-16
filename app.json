@@ -5,7 +5,6 @@
     "version": "1.0.0",
     "scheme": "focusflow",
     "orientation": "portrait",
-    "userInterfaceStyle": "dark",
     "web": {
       "bundler": "metro",
       "output": "single"
