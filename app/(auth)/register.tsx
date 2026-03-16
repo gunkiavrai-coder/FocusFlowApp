@@ -28,7 +28,7 @@ export default function Register() {
       password,
     });
     if (error) setError(error.message);
-    else router.replace("/(app)");
+    else setSuccess(true);
     setLoading(false);
   };
 
