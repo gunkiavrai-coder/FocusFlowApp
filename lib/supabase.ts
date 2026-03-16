@@ -2,11 +2,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createClient } from "@supabase/supabase-js";
 import { Platform } from "react-native";
 
-const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY!;
+const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL ?? "";
+const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY ?? "";
 
-// Web: use localStorage with SSR guard (window may not exist in Node.js during SSR)
-// Native: use AsyncStorage
+// Supabase est configuré seulement si les variables d'env sont renseignées
+export const isSupabaseConfigured =
+  supabaseUrl.length > 0 &&
+  !supabaseUrl.includes("VOTRE_PROJECT_ID") &&
+  supabaseAnonKey.length > 0 &&
+  !supabaseAnonKey.includes("VOTRE_ANON_KEY");
+
 const webStorage = {
   getItem: (key: string): Promise<string | null> => {
     if (typeof window === "undefined") return Promise.resolve(null);
@@ -22,11 +27,15 @@ const webStorage = {
   },
 };
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    storage: (Platform.OS === "web" ? webStorage : AsyncStorage) as any,
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: false,
-  },
-});
+export const supabase = createClient(
+  supabaseUrl || "https://placeholder.supabase.co",
+  supabaseAnonKey || "placeholder",
+  {
+    auth: {
+      storage: (Platform.OS === "web" ? webStorage : AsyncStorage) as any,
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: false,
+    },
+  }
+);
